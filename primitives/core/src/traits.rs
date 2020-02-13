@@ -131,3 +131,15 @@ impl CallInWasmExt {
 		Self(Box::new(inner))
 	}
 }
+
+pub trait VerificationCache: Send + Sync {
+	fn put_known_good(&mut self, signature: &[u8], message: &[u8]);
+
+	fn is_known_good(&self, signature: &[u8], message: &[u8]) -> bool;
+
+	fn clear(&mut self);
+}
+
+sp_externalities::decl_extension! {
+	pub struct VerificationCacheExt(Arc<parking_lot::RwLock<dyn VerificationCache>>);
+}

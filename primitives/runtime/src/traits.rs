@@ -94,7 +94,9 @@ impl Verify for sp_core::ed25519::Signature {
 impl Verify for sp_core::sr25519::Signature {
 	type Signer = sp_core::sr25519::Public;
 	fn verify<L: Lazy<[u8]>>(&self, mut msg: L, signer: &sp_core::sr25519::Public) -> bool {
-		sp_io::crypto::sr25519_verify(self, msg.get(), signer)
+		let msg = msg.get();
+		sp_io::crypto::known_signature(&self.0[..], msg) ||
+			sp_io::crypto::sr25519_verify(self, msg, signer)
 	}
 }
 

@@ -34,7 +34,7 @@ use sp_std::ops::Deref;
 #[cfg(feature = "std")]
 use sp_core::{
 	crypto::Pair,
-	traits::{KeystoreExt, CallInWasmExt},
+	traits::{KeystoreExt, CallInWasmExt, VerificationExt},
 	offchain::{OffchainExt, TransactionPoolExt},
 	hexdisplay::HexDisplay,
 	storage::{ChildStorageKey, ChildInfo},
@@ -471,6 +471,16 @@ pub trait Crypto {
 	/// Returns `true` when the verification in successful.
 	fn sr25519_verify(sig: &sr25519::Signature, msg: &[u8], pubkey: &sr25519::Public) -> bool {
 		sr25519::Pair::verify(sig, msg, pubkey)
+	}
+
+	/// Check if signature was verified before.
+	///
+	/// Returns `true` if the signature was checked before and is valid.
+	/// Will return false if no `VerificationExt` extension is registered!
+	fn known_signature(&mut self, sig: &[u8], msg: &[u8]) -> bool {
+		self.extension::<VerificationExt>()
+			.map(|ext| ext.read().is_known_good(sig, msg))
+			.unwrap_or(false)
 	}
 
 	/// Verify and recover a SECP256k1 ECDSA signature.
