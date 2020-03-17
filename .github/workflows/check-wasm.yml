@@ -4,7 +4,7 @@ on:                        [push]
 jobs:
   check-web-wasm:
     name:                  Check web wasm
-    runs-on:               self-hosted
+    runs-on:               ubuntu-latest
     container:             generalbeck/rust-builder:musl
     env:
       CARGO_INCREMENTAL:   0

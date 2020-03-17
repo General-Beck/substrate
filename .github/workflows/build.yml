@@ -8,7 +8,7 @@ jobs:
 #build
   build-substrate:
     name:                      Build linux Substrate
-    runs-on:                   self-hosted
+    runs-on:                   ubuntu-latest
     container:                 generalbeck/rust-builder:musl
     steps:
       - name:                  Checkout sources
@@ -37,7 +37,7 @@ jobs:
 
   build-subkey-linux:
     name:                      Build linux Subkey
-    runs-on:                   self-hosted
+    runs-on:                   ubuntu-latest
     container:                 generalbeck/rust-builder:musl
     steps:
       - name:                  Checkout sources
