@@ -9,7 +9,7 @@ jobs:
   build-substrate:
     name:                      Build linux Substrate
     runs-on:                   self-hosted
-    container:                 generalbeck/rust-builder:alpine
+    container:                 generalbeck/rust-builder:musl
     steps:
       - name:                  Checkout sources
         uses:                  actions/checkout@master
@@ -20,7 +20,7 @@ jobs:
           key:                 ${{ runner.OS }}-cargo-build-[build-substrate]-${{ hashFiles('**/Cargo.lock') }}
       - name:                  Run cargo build Substrate
         shell:                 bash
-        run:                   cargo build --release --verbose
+        run:                   cargo build --target x86_64-unknown-linux-musl --release --verbose
       - name: Prepare artifacts
         shell: bash
         run: |
@@ -38,7 +38,7 @@ jobs:
   build-subkey-linux:
     name:                      Build linux Subkey
     runs-on:                   self-hosted
-    container:                 generalbeck/rust-builder:alpine
+    container:                 generalbeck/rust-builder:musl
     steps:
       - name:                  Checkout sources
         uses:                  actions/checkout@master
@@ -49,7 +49,7 @@ jobs:
           key:                 ${{ runner.OS }}-cargo-build-[build-subkey-linux]-${{ hashFiles('**/Cargo.lock') }}
       - name:                  Run cargo build Subkey
         shell:                 bash
-        run:                   cargo build --release --verbose
+        run:                   cargo build --target x86_64-unknown-linux-musl --release --verbose
       - name: Prepare artifacts
         shell: bash
         run: |
@@ -99,7 +99,7 @@ jobs:
   build-rust-doc-release:
     name:                      Build Rust doc release
     runs-on:                   ubuntu-latest
-    container:                 generalbeck/rust-builder:alpine
+    container:                 generalbeck/rust-builder:musl
     steps:
       - name:                  Checkout sources
         uses:                  actions/checkout@master
