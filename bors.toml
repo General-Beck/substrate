@@ -1,4 +1,4 @@
-status = [ 'ci/gitlab/%' ]
+status = [ 'ci/gitubb/%' ]
 
 timeout_sec = 14400
 required_approvals = 1
