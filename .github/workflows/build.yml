@@ -1,141 +1,151 @@
-name:                          Build
+name:                      Build
 
-on:                            [push]
+on:                        [push]
 #  push:
 #    branches:
 #      - master
 jobs:
 #build
   build-substrate:
-    name:                      Build linux Substrate
-    runs-on:                   ubuntu-latest
-    container:                 generalbeck/rust-builder:musl
+    name:                  Build linux Substrate
+    runs-on:               ubuntu-latest
+    container:             generalbeck/rust-builder:musl
     steps:
-      - name:                  Checkout sources
-        uses:                  actions/checkout@master
-      - name:                   Fixup the owner of ~/.cargo/
-        if:                     matrix.platform == 'ubuntu-latest'
-        run:                    sudo chown -R $(whoami):$(id -ng) ~/.cargo/
-       - name:                   Cache cargo registry
-        uses:                   actions/cache@v1.1.2
+      - name:              Checkout sources
+        uses:              actions/checkout@master
+      - name:              Fixup the owner of ~/.cargo/
+        if:                matrix.platform == 'ubuntu-latest'
+        run:               sudo chown -R $(whoami):$(id -ng) ~/.cargo/
+      - name:              Cache cargo registry
+        uses:              actions/cache@v1.1.2
         with:
-          path:                 ~/.cargo/registry
-          key:                  ${{ runner.os }}-cargo-registry-build-${{ hashFiles('**/Cargo.lock') }}
-      - name:                   Cache cargo index
-        uses:                   actions/cache@v1.1.2
+          path:            ~/.cargo/registry
+          key:             ${{ runner.os }}-cargo-registry-build-${{ hashFiles('**/Cargo.lock') }}
+      - name:              Cache cargo index
+        uses:              actions/cache@v1.1.2
         with:
-          path:                 ~/.cargo/git
-          key:                  ${{ runner.os }}-cargo-git-build-${{ hashFiles('**/Cargo.lock') }}
-      - name:                  Restore ./target
-        uses:                  actions/cache@v1.1.2
+          path:            ~/.cargo/git
+          key:             ${{ runner.os }}-cargo-git-build-${{ hashFiles('**/Cargo.lock') }}
+      - name:              Restore ./target
+        uses:              actions/cache@v1.1.2
         with:
-          path:                target
-          key:                 ${{ runner.OS }}-cargo-build-[build-substrate]-${{ hashFiles('**/Cargo.lock') }}
-      - name:                  Run cargo build Substrate
-        shell:                 bash
-        run:                   cargo build --release --verbose
-      - name: Prepare artifacts
-        shell: bash
-        run: |
+          path:            target
+          key:             ${{ runner.OS }}-cargo-build-[build-substrate]-${{ hashFiles('**/Cargo.lock') }}
+      - name:              Run cargo build Substrate
+        shell:             bash
+        run:               cargo build --release --verbose
+      - name:              Prepare artifacts
+        shell:             bash
+        run:               |
           echo "_____ Post-processing binaries _____"
           rm -rf artifacts/*
           mkdir -p artifacts/
           cp -v target/release/substrate artifacts/substrate
-      - name:                  Upload artifact
-        uses:                  actions/upload-artifact@v1
-        continue-on-error:     true
+      - name:              Upload artifact
+        uses:              actions/upload-artifact@v1
+        continue-on-error: true
         with:
-          name:                ${{ runner.os }}.substrate.zip
-          path:                artifacts/
+          name:            ${{ runner.os }}.substrate.zip
+          path:            artifacts/
 
   build-subkey-linux:
-    name:                      Build linux Subkey
-    runs-on:                   ubuntu-latest
-    container:                 generalbeck/rust-builder:musl
+    name:                  Build linux Subkey
+    runs-on:               ubuntu-latest
+    container:             generalbeck/rust-builder:musl
     steps:
-      - name:                  Checkout sources
-        uses:                  actions/checkout@master
-      - name:                   Fixup the owner of ~/.cargo/
-        if:                     matrix.platform == 'ubuntu-latest'
-        run:                    sudo chown -R $(whoami):$(id -ng) ~/.cargo/
-       - name:                   Cache cargo registry
-        uses:                   actions/cache@v1.1.2
+      - name:              Checkout sources
+        uses:              actions/checkout@master
+      - name:              Fixup the owner of ~/.cargo/
+        if:                matrix.platform == 'ubuntu-latest'
+        run:               sudo chown -R $(whoami):$(id -ng) ~/.cargo/
+      - name:              Cache cargo registry
+        uses:              actions/cache@v1.1.2
         with:
-          path:                 ~/.cargo/registry
-          key:                  ${{ runner.os }}-cargo-registry-build-${{ hashFiles('**/Cargo.lock') }}
-      - name:                   Cache cargo index
-        uses:                   actions/cache@v1.1.2
+          path:            ~/.cargo/registry
+          key:             ${{ runner.os }}-cargo-registry-build-${{ hashFiles('**/Cargo.lock') }}
+      - name:              Cache cargo index
+        uses:              actions/cache@v1.1.2
         with:
-          path:                 ~/.cargo/git
-          key:                  ${{ runner.os }}-cargo-git-build-${{ hashFiles('**/Cargo.lock') }}
-      - name:                  Restore ./target
-        uses:                  actions/cache@v1.1.2
+          path:            ~/.cargo/git
+          key:             ${{ runner.os }}-cargo-git-build-${{ hashFiles('**/Cargo.lock') }}
+      - name:              Restore ./target
+        uses:              actions/cache@v1.1.2
         with:
-          path:                target
-          key:                 ${{ runner.OS }}-cargo-build-[build-subkey-linux]-${{ hashFiles('**/Cargo.lock') }}
-      - name:                  Run cargo build Subkey
-        shell:                 bash
-        run:                   cargo build --release --verbose
-      - name: Prepare artifacts
-        shell: bash
-        run: |
+          path:            target
+          key:             ${{ runner.OS }}-cargo-build-[build-subkey-linux]-${{ hashFiles('**/Cargo.lock') }}
+      - name:              Run cargo build Subkey
+        shell:             bash
+        run:               cargo build --release --verbose
+      - name:              Prepare artifacts
+        shell:             bash
+        run:               |
           echo "_____ Post-processing binaries _____"
           rm -rf artifacts/*
           mkdir -p artifacts/
           cp -v target/release/subkey artifacts/subkey
-      - name:                  Upload artifact
-        uses:                  actions/upload-artifact@v1
-        continue-on-error:     true
+      - name:              Upload artifact
+        uses:              actions/upload-artifact@v1
+        continue-on-error: true
         with:
-          name:                ${{ runner.os }}.subkey.zip
-          path:                artifacts/
+          name:            ${{ runner.os }}.subkey.zip
+          path:            artifacts/
 
   build-subkey-macos:
-    name:                      Build MacOS Subkey
-    runs-on:                   macos-latest
+    name:                  Build MacOS Subkey
+    runs-on:               macos-latest
     steps:
-      - name:                  Checkout sources
-        uses:                  actions/checkout@master
-      - name:                  Restore ./target
-        uses:                  actions/cache@v1.1.2
+      - name:              Checkout sources
+        uses:              actions/checkout@master
+      - name:              Cache cargo registry
+        uses:              actions/cache@v1.1.2
         with:
-          path:                target
-          key:                 ${{ runner.OS }}-cargo-build-[build-subkey-macos]-${{ hashFiles('**/Cargo.lock') }}
-      - name:                  Run cargo build Subkey
-        shell:                 bash
-        run: |
+          path:            ~/.cargo/registry
+          key:             ${{ runner.os }}-cargo-registry-build-${{ hashFiles('**/Cargo.lock') }}
+      - name:              Cache cargo index
+        uses:              actions/cache@v1.1.2
+        with:
+          path:            ~/.cargo/git
+          key:             ${{ runner.os }}-cargo-git-build-${{ hashFiles('**/Cargo.lock') }}
+      - name:              Restore ./target
+        uses:              actions/cache@v1.1.2
+        with:
+          path:            target
+          key:             ${{ runner.OS }}-cargo-build-[build-subkey-macos]-${{ hashFiles('**/Cargo.lock') }}
+      - name:              Run cargo build Subkey
+        shell:             bash
+        run:               |
           rustup install stable nightly
           rustup target add wasm32-unknown-unknown
           rustup target add wasm32-unknown-unknown --toolchain nightly
           cargo build --release --verbose
-      - name: Prepare artifacts
-        shell: bash
-        run: |
+      - name:              Prepare artifacts
+        shell:             bash
+        run:               |
           echo "_____ Post-processing binaries _____"
           rm -rf artifacts/*
           mkdir -p artifacts/
           cp -v target/release/subkey artifacts/subkey
-      - name:                  Upload artifact
-        uses:                  actions/upload-artifact@v1
-        continue-on-error:     true
+      - name:              Upload artifact
+        uses:              actions/upload-artifact@v1
+        continue-on-error: true
         with:
-          name:                ${{ runner.os }}.subkey.zip
-          path:                artifacts/
+          name:            ${{ runner.os }}.subkey.zip
+          path:            artifacts/
 
   build-rust-doc-release:
-    name:                      Build Rust doc release
-    runs-on:                   ubuntu-latest
-    container:                 generalbeck/rust-builder:musl
+    name:                  Build Rust doc release
+    runs-on:               ubuntu-latest
+    container:             generalbeck/rust-builder:musl
     steps:
-      - name:                  Checkout sources
-        uses:                  actions/checkout@master
+      - name:              Checkout sources
+        uses:              actions/checkout@master
         with:
           submodules:      recursive
-      - name:                  Restore ./target
-        uses:                  actions/cache@v1.1.2
+      - name:              Restore ./target
+        uses:              actions/cache@v1.1.2
         with:
-          path:                target
-          key:                 ${{ runner.OS }}-cargo-build-[build-rust-doc-release]-${{ hashFiles('**/Cargo.lock') }}
-      - name:                  Run cargo doc release
-        shell:                 bash
-        run:                   cargo +nightly doc --release --all --verbose
+          path:            target
+          key:             ${{ runner.OS }}-cargo-build-[build-rust-doc-release]-${{ hashFiles('**/Cargo.lock') }}
+      - name:              Run cargo doc release
+        shell:             bash
+        run:               cargo +nightly doc --release --all --verbose

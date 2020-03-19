@@ -16,21 +16,21 @@ jobs:
       - name:                  Checkout sources
         uses:                  actions/checkout@master
         with:
-          submodules:      recursive
+          submodules:          recursive
       # https://github.com/actions/cache/issues/133
-      - name:                   Fixup the owner of ~/.cargo/
-        if:                     matrix.platform == 'ubuntu-latest'
-        run:                    sudo chown -R $(whoami):$(id -ng) ~/.cargo/
-       - name:                   Cache cargo registry
-        uses:                   actions/cache@v1.1.2
+      - name:                  Fixup the owner of ~/.cargo/
+        if:                    matrix.platform == 'ubuntu-latest'
+        run:                   sudo chown -R $(whoami):$(id -ng) ~/.cargo/
+      - name:                  Cache cargo registry
+        uses:                  actions/cache@v1.1.2
         with:
-          path:                 ~/.cargo/registry
-          key:                  ${{ runner.os }}-cargo-registry-substrate-${{ hashFiles('**/Cargo.lock') }}
-      - name:                   Cache cargo index
-        uses:                   actions/cache@v1.1.2
+          path:                ~/.cargo/registry
+          key:                 ${{ runner.os }}-cargo-registry-substrate-${{ hashFiles('**/Cargo.lock') }}
+      - name:                  Cache cargo index
+        uses:                  actions/cache@v1.1.2
         with:
-          path:                 ~/.cargo/git
-          key:                  ${{ runner.os }}-cargo-git-substrate-${{ hashFiles('**/Cargo.lock') }}
+          path:                ~/.cargo/git
+          key:                 ${{ runner.os }}-cargo-git-substrate-${{ hashFiles('**/Cargo.lock') }}
       - name:                  Restore ./target
         uses:                  actions/cache@v1.1.2
         with:
@@ -59,20 +59,20 @@ jobs:
       - name:                  Checkout sources
         uses:                  actions/checkout@master
         with:
-          submodules:      recursive
-      - name:                   Fixup the owner of ~/.cargo/
-        if:                     matrix.platform == 'ubuntu-latest'
-        run:                    sudo chown -R $(whoami):$(id -ng) ~/.cargo/
-       - name:                   Cache cargo registry
-        uses:                   actions/cache@v1.1.2
+          submodules:          recursive
+      - name:                  Fixup the owner of ~/.cargo/
+        if:                    matrix.platform == 'ubuntu-latest'
+        run:                   sudo chown -R $(whoami):$(id -ng) ~/.cargo/
+      - name:                  Cache cargo registry
+        uses:                  actions/cache@v1.1.2
         with:
-          path:                 ~/.cargo/registry
-          key:                  ${{ runner.os }}-cargo-registry-substrate-${{ hashFiles('**/Cargo.lock') }}
-      - name:                   Cache cargo index
-        uses:                   actions/cache@v1.1.2
+          path:                ~/.cargo/registry
+          key:                 ${{ runner.os }}-cargo-registry-substrate-${{ hashFiles('**/Cargo.lock') }}
+      - name:                  Cache cargo index
+        uses:                  actions/cache@v1.1.2
         with:
-          path:                 ~/.cargo/git
-          key:                  ${{ runner.os }}-cargo-git-substrate-${{ hashFiles('**/Cargo.lock') }}
+          path:                ~/.cargo/git
+          key:                 ${{ runner.os }}-cargo-git-substrate-${{ hashFiles('**/Cargo.lock') }}
       - name:                  Restore ./target
         uses:                  actions/cache@v1.1.2
         with:
@@ -103,20 +103,20 @@ jobs:
       - name:                  Checkout sources
         uses:                  actions/checkout@master
         with:
-          submodules:      recursive
-      - name:                   Fixup the owner of ~/.cargo/
-        if:                     matrix.platform == 'ubuntu-latest'
-        run:                    sudo chown -R $(whoami):$(id -ng) ~/.cargo/
-       - name:                   Cache cargo registry
-        uses:                   actions/cache@v1.1.2
+          submodules:          recursive
+      - name:                  Fixup the owner of ~/.cargo/
+        if:                    matrix.platform == 'ubuntu-latest'
+        run:                   sudo chown -R $(whoami):$(id -ng) ~/.cargo/
+      - name:                  Cache cargo registry
+        uses:                  actions/cache@v1.1.2
         with:
-          path:                 ~/.cargo/registry
-          key:                  ${{ runner.os }}-cargo-registry-substrate-${{ hashFiles('**/Cargo.lock') }}
-      - name:                   Cache cargo index
-        uses:                   actions/cache@v1.1.2
+          path:                ~/.cargo/registry
+          key:                 ${{ runner.os }}-cargo-registry-substrate-${{ hashFiles('**/Cargo.lock') }}
+      - name:                  Cache cargo index
+        uses:                  actions/cache@v1.1.2
         with:
-          path:                 ~/.cargo/git
-          key:                  ${{ runner.os }}-cargo-git-substrate-${{ hashFiles('**/Cargo.lock') }}
+          path:                ~/.cargo/git
+          key:                 ${{ runner.os }}-cargo-git-substrate-${{ hashFiles('**/Cargo.lock') }}
       - name:                  Restore ./target
         uses:                  actions/cache@v1.1.2
         with:
@@ -147,20 +147,20 @@ jobs:
       - name:                  Checkout sources
         uses:                  actions/checkout@master
         with:
-          submodules:      recursive
-      - name:                   Fixup the owner of ~/.cargo/
-        if:                     matrix.platform == 'ubuntu-latest'
-        run:                    sudo chown -R $(whoami):$(id -ng) ~/.cargo/
-       - name:                   Cache cargo registry
-        uses:                   actions/cache@v1.1.2
+          submodules:          recursive
+      - name:                  Fixup the owner of ~/.cargo/
+        if:                    matrix.platform == 'ubuntu-latest'
+        run:                   sudo chown -R $(whoami):$(id -ng) ~/.cargo/
+      - name:                  Cache cargo registry
+        uses:                  actions/cache@v1.1.2
         with:
-          path:                 ~/.cargo/registry
-          key:                  ${{ runner.os }}-cargo-registry-substrate-${{ hashFiles('**/Cargo.lock') }}
-      - name:                   Cache cargo index
-        uses:                   actions/cache@v1.1.2
+          path:                ~/.cargo/registry
+          key:                 ${{ runner.os }}-cargo-registry-substrate-${{ hashFiles('**/Cargo.lock') }}
+      - name:                  Cache cargo index
+        uses:                  actions/cache@v1.1.2
         with:
-          path:                 ~/.cargo/git
-          key:                  ${{ runner.os }}-cargo-git-substrate-${{ hashFiles('**/Cargo.lock') }}
+          path:                ~/.cargo/git
+          key:                 ${{ runner.os }}-cargo-git-substrate-${{ hashFiles('**/Cargo.lock') }}
       - name:                  Restore ./target
         uses:                  actions/cache@v1.1.2
         with:
@@ -190,20 +190,20 @@ jobs:
       - name:                  Checkout sources
         uses:                  actions/checkout@master
         with:
-          submodules:      recursive
-      - name:                   Fixup the owner of ~/.cargo/
-        if:                     matrix.platform == 'ubuntu-latest'
-        run:                    sudo chown -R $(whoami):$(id -ng) ~/.cargo/
-       - name:                   Cache cargo registry
-        uses:                   actions/cache@v1.1.2
+          submodules:          recursive
+      - name:                  Fixup the owner of ~/.cargo/
+        if:                    matrix.platform == 'ubuntu-latest'
+        run:                   sudo chown -R $(whoami):$(id -ng) ~/.cargo/
+      - name:                  Cache cargo registry
+        uses:                  actions/cache@v1.1.2
         with:
-          path:                 ~/.cargo/registry
-          key:                  ${{ runner.os }}-cargo-registry-substrate-${{ hashFiles('**/Cargo.lock') }}
-      - name:                   Cache cargo index
-        uses:                   actions/cache@v1.1.2
+          path:                ~/.cargo/registry
+          key:                 ${{ runner.os }}-cargo-registry-substrate-${{ hashFiles('**/Cargo.lock') }}
+      - name:                  Cache cargo index
+        uses:                  actions/cache@v1.1.2
         with:
-          path:                 ~/.cargo/git
-          key:                  ${{ runner.os }}-cargo-git-substrate-${{ hashFiles('**/Cargo.lock') }}
+          path:                ~/.cargo/git
+          key:                 ${{ runner.os }}-cargo-git-substrate-${{ hashFiles('**/Cargo.lock') }}
       - name:                  Restore ./target
         uses:                  actions/cache@v1.1.2
         with:
@@ -233,20 +233,20 @@ jobs:
       - name:                  Checkout sources
         uses:                  actions/checkout@master
         with:
-          submodules:      recursive
-      - name:                   Fixup the owner of ~/.cargo/
-        if:                     matrix.platform == 'ubuntu-latest'
-        run:                    sudo chown -R $(whoami):$(id -ng) ~/.cargo/
-       - name:                   Cache cargo registry
-        uses:                   actions/cache@v1.1.2
+          submodules:          recursive
+      - name:                  Fixup the owner of ~/.cargo/
+        if:                    matrix.platform == 'ubuntu-latest'
+        run:                   sudo chown -R $(whoami):$(id -ng) ~/.cargo/
+      - name:                  Cache cargo registry
+        uses:                  actions/cache@v1.1.2
         with:
-          path:                 ~/.cargo/registry
-          key:                  ${{ runner.os }}-cargo-registry-substrate-${{ hashFiles('**/Cargo.lock') }}
-      - name:                   Cache cargo index
-        uses:                   actions/cache@v1.1.2
+          path:                ~/.cargo/registry
+          key:                 ${{ runner.os }}-cargo-registry-substrate-${{ hashFiles('**/Cargo.lock') }}
+      - name:                  Cache cargo index
+        uses:                  actions/cache@v1.1.2
         with:
-          path:                 ~/.cargo/git
-          key:                  ${{ runner.os }}-cargo-git-substrate-${{ hashFiles('**/Cargo.lock') }}
+          path:                ~/.cargo/git
+          key:                 ${{ runner.os }}-cargo-git-substrate-${{ hashFiles('**/Cargo.lock') }}
       - name:                  Restore ./target
         uses:                  actions/cache@v1.1.2
         with:
@@ -278,20 +278,20 @@ jobs:
       - name:                  Checkout sources
         uses:                  actions/checkout@master
         with:
-          submodules:      recursive
-      - name:                   Fixup the owner of ~/.cargo/
-        if:                     matrix.platform == 'ubuntu-latest'
-        run:                    sudo chown -R $(whoami):$(id -ng) ~/.cargo/
-       - name:                   Cache cargo registry
-        uses:                   actions/cache@v1.1.2
+          submodules:          recursive
+      - name:                  Fixup the owner of ~/.cargo/
+        if:                    matrix.platform == 'ubuntu-latest'
+        run:                   sudo chown -R $(whoami):$(id -ng) ~/.cargo/
+       - name:                 Cache cargo registry
+        uses:                  actions/cache@v1.1.2
         with:
-          path:                 ~/.cargo/registry
-          key:                  ${{ runner.os }}-cargo-registry-substrate-${{ hashFiles('**/Cargo.lock') }}
-      - name:                   Cache cargo index
-        uses:                   actions/cache@v1.1.2
+          path:                ~/.cargo/registry
+          key:                 ${{ runner.os }}-cargo-registry-substrate-${{ hashFiles('**/Cargo.lock') }}
+      - name:                  Cache cargo index
+        uses:                  actions/cache@v1.1.2
         with:
-          path:                 ~/.cargo/git
-          key:                  ${{ runner.os }}-cargo-git-substrate-${{ hashFiles('**/Cargo.lock') }}
+          path:                ~/.cargo/git
+          key:                 ${{ runner.os }}-cargo-git-substrate-${{ hashFiles('**/Cargo.lock') }}
       - name:                  Restore ./target
         uses:                  actions/cache@v1.1.2
         with:
@@ -321,7 +321,7 @@ jobs:
       - name:                  Checkout sources
         uses:                  actions/checkout@master
         with:
-          submodules:      recursive
+          submodules:          recursive
       - name:                  Test dependency rules
         shell:                 bash
         run:                   .maintain/ensure-deps.sh
