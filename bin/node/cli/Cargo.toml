@@ -100,7 +100,6 @@ wasm-bindgen = { version = "0.2.57", optional = true }
 wasm-bindgen-futures = { version = "0.4.7", optional = true }
 browser-utils = { package = "substrate-browser-utils", path = "../../../utils/browser", optional = true, version = "0.8.0-alpha.4"}
 
-
 [dev-dependencies]
 sc-keystore = { version = "2.0.0-alpha.4", path = "../../../client/keystore" }
 sc-consensus-babe = { version = "0.8.0-alpha.4", features = ["test-helpers"], path = "../../../client/consensus/babe" }
@@ -111,6 +110,7 @@ tempfile = "3.1.0"
 assert_cmd = "0.12"
 nix = "0.17"
 serde_json = "1.0"
+
 [build-dependencies]
 build-script-utils = { version = "2.0.0-alpha.4", package = "substrate-build-script-utils", path = "../../../utils/build-script-utils" }
 structopt = { version = "0.3.8", optional = true }
