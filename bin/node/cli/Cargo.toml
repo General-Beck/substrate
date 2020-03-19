@@ -111,14 +111,13 @@ tempfile = "3.1.0"
 assert_cmd = "0.12"
 nix = "0.17"
 serde_json = "1.0"
-#panic = "abort"
 [build-dependencies]
 build-script-utils = { version = "2.0.0-alpha.2", package = "substrate-build-script-utils", path = "../../../utils/build-script-utils" }
 structopt = { version = "0.3.8", optional = true }
 node-transaction-factory = { version = "0.8.0-alpha.2", optional = true, path = "../transaction-factory" }
 node-inspect = { version = "0.8.0-alpha.2", optional = true, path = "../inspect" }
 frame-benchmarking-cli = { version = "2.0.0-alpha.2", optional = true, path = "../../../utils/frame/benchmarking-cli" }
-#panic = "abort"
+
 [build-dependencies.sc-cli]
 version = "0.8.0-alpha.2"
 package = "sc-cli"

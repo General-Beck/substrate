@@ -15,38 +15,20 @@
 // along with Substrate.  If not, see <http://www.gnu.org/licenses/>.
 
 //! Substrate Node CLI
-#![no_std] // don't link the Rust standard library
-#![no_main] // disable all Rust-level entry points
-
-use core::panic::PanicInfo;
-
-/// This function is called on panic.
-#[panic_handler]
-fn panic(_info: &PanicInfo) -> ! {
-    loop {}
-}
-#[cfg(target_os = "linux")]
-#[no_mangle] // don't mangle the name of this function
-pub extern "C" fn _start() -> ! {
-	// this function is the entry point, since the linker looks for a function
-    // named `_start` by default
-    loop {}
-}
-
 
 #![warn(missing_docs)]
 
 fn main() -> sc_cli::Result<()> {
-	let version = sc_cli::VersionInfo {
-		name: "Substrate Node",
-		commit: env!("VERGEN_SHA_SHORT"),
-		version: env!("CARGO_PKG_VERSION"),
-		executable_name: "substrate",
-		author: "Parity Technologies <admin@parity.io>",
-		description: "Generic substrate node",
-		support_url: "https://github.com/paritytech/substrate/issues/new",
-		copyright_start_year: 2017,
-	};
+    let version = sc_cli::VersionInfo {
+        name: "Substrate Node",
+        commit: env!("VERGEN_SHA_SHORT"),
+        version: env!("CARGO_PKG_VERSION"),
+        executable_name: "substrate",
+        author: "Parity Technologies <admin@parity.io>",
+        description: "Generic substrate node",
+        support_url: "https://github.com/paritytech/substrate/issues/new",
+        copyright_start_year: 2017,
+    };
 
-	node_cli::run(std::env::args(), version)
+    node_cli::run(std::env::args(), version)
 }

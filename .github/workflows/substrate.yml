@@ -7,7 +7,7 @@ on:                            [push]
 jobs:
   cargo-check-benches:
     name:                      Cargo check benches
-    runs-on:                   self-hosted
+    runs-on:                   ubuntu-latest
     container:                 generalbeck/rust-builder:musl
     env:
       BUILD_DUMMY_WASM_BINARY: 1
@@ -17,6 +17,20 @@ jobs:
         uses:                  actions/checkout@master
         with:
           submodules:      recursive
+      # https://github.com/actions/cache/issues/133
+      - name:                   Fixup the owner of ~/.cargo/
+        if:                     matrix.platform == 'ubuntu-latest'
+        run:                    sudo chown -R $(whoami):$(id -ng) ~/.cargo/
+       - name:                   Cache cargo registry
+        uses:                   actions/cache@v1.1.2
+        with:
+          path:                 ~/.cargo/registry
+          key:                  ${{ runner.os }}-cargo-registry-substrate-${{ hashFiles('**/Cargo.lock') }}
+      - name:                   Cache cargo index
+        uses:                   actions/cache@v1.1.2
+        with:
+          path:                 ~/.cargo/git
+          key:                  ${{ runner.os }}-cargo-git-substrate-${{ hashFiles('**/Cargo.lock') }}
       - name:                  Restore ./target
         uses:                  actions/cache@v1.1.2
         with:
@@ -25,7 +39,7 @@ jobs:
       - name:                  Run cargo check benches
         shell:                 bash
         continue-on-error:     true
-        run:                   time cargo +nightly check --target x86_64-unknown-linux-musl --benches --all
+        run:                   time cargo +nightly check --benches --all
       - name:                  Prepare build directory for cache
         shell:                 bash
         run:                   |
@@ -36,7 +50,7 @@ jobs:
 
   cargo-check-subkey:
     name:                      Cargo check subkey
-    runs-on:                   [self-hosted]
+    runs-on:                   [ubuntu-latest]
     container:                 generalbeck/rust-builder:musl
     env:
       BUILD_DUMMY_WASM_BINARY: 1
@@ -46,6 +60,19 @@ jobs:
         uses:                  actions/checkout@master
         with:
           submodules:      recursive
+      - name:                   Fixup the owner of ~/.cargo/
+        if:                     matrix.platform == 'ubuntu-latest'
+        run:                    sudo chown -R $(whoami):$(id -ng) ~/.cargo/
+       - name:                   Cache cargo registry
+        uses:                   actions/cache@v1.1.2
+        with:
+          path:                 ~/.cargo/registry
+          key:                  ${{ runner.os }}-cargo-registry-substrate-${{ hashFiles('**/Cargo.lock') }}
+      - name:                   Cache cargo index
+        uses:                   actions/cache@v1.1.2
+        with:
+          path:                 ~/.cargo/git
+          key:                  ${{ runner.os }}-cargo-git-substrate-${{ hashFiles('**/Cargo.lock') }}
       - name:                  Restore ./target
         uses:                  actions/cache@v1.1.2
         with:
@@ -54,7 +81,7 @@ jobs:
       - name:                  Run cargo check subkey
         shell:                 bash
         continue-on-error:     true
-        run:                   time cargo check --target x86_64-unknown-linux-musl --release --manifest-path "bin/utils/subkey/Cargo.toml"
+        run:                   time cargo check --release --manifest-path "bin/utils/subkey/Cargo.toml"
       - name:                  Prepare build directory for cache
         shell:                 bash
         run:                   |
@@ -66,7 +93,7 @@ jobs:
 
   test-stable:
     name:                      Test linux stable
-    runs-on:                   self-hosted
+    runs-on:                   ubuntu-latest
     container:                 generalbeck/rust-builder:musl
     env:
       RUSTFLAGS:               "-Cdebug-assertions=y"
@@ -77,6 +104,19 @@ jobs:
         uses:                  actions/checkout@master
         with:
           submodules:      recursive
+      - name:                   Fixup the owner of ~/.cargo/
+        if:                     matrix.platform == 'ubuntu-latest'
+        run:                    sudo chown -R $(whoami):$(id -ng) ~/.cargo/
+       - name:                   Cache cargo registry
+        uses:                   actions/cache@v1.1.2
+        with:
+          path:                 ~/.cargo/registry
+          key:                  ${{ runner.os }}-cargo-registry-substrate-${{ hashFiles('**/Cargo.lock') }}
+      - name:                   Cache cargo index
+        uses:                   actions/cache@v1.1.2
+        with:
+          path:                 ~/.cargo/git
+          key:                  ${{ runner.os }}-cargo-git-substrate-${{ hashFiles('**/Cargo.lock') }}
       - name:                  Restore ./target
         uses:                  actions/cache@v1.1.2
         with:
@@ -85,7 +125,7 @@ jobs:
       - name:                  Run cargo Test linux stable
         shell:                 bash
         continue-on-error:     true
-        run:                   cargo test --target x86_64-unknown-linux-musl --all --release --verbose --locked
+        run:                   cargo test --all --release --verbose --locked
       - name:                  Prepare build directory for cache
         shell:                 bash
         run:                   |
@@ -97,7 +137,7 @@ jobs:
 
   testrfame-staking:
     name:                      Test frame staking
-    runs-on:                   self-hosted
+    runs-on:                   ubuntu-latest
     container:                 generalbeck/rust-builder:musl
     env:
       RUSTFLAGS:               "-Cdebug-assertions=y"
@@ -108,6 +148,19 @@ jobs:
         uses:                  actions/checkout@master
         with:
           submodules:      recursive
+      - name:                   Fixup the owner of ~/.cargo/
+        if:                     matrix.platform == 'ubuntu-latest'
+        run:                    sudo chown -R $(whoami):$(id -ng) ~/.cargo/
+       - name:                   Cache cargo registry
+        uses:                   actions/cache@v1.1.2
+        with:
+          path:                 ~/.cargo/registry
+          key:                  ${{ runner.os }}-cargo-registry-substrate-${{ hashFiles('**/Cargo.lock') }}
+      - name:                   Cache cargo index
+        uses:                   actions/cache@v1.1.2
+        with:
+          path:                 ~/.cargo/git
+          key:                  ${{ runner.os }}-cargo-git-substrate-${{ hashFiles('**/Cargo.lock') }}
       - name:                  Restore ./target
         uses:                  actions/cache@v1.1.2
         with:
@@ -116,7 +169,7 @@ jobs:
       - name:                  Run cargo Test frame staking
         shell:                 bash
         continue-on-error:     true
-        run:                   cargo test --target x86_64-unknown-linux-musl --manifest-path "./frame/staking/Cargo.toml" --release --verbose --no-default-features --features std
+        run:                   cargo test --manifest-path "./frame/staking/Cargo.toml" --release --verbose --no-default-features --features std
       - name:                  Prepare build directory for cache
         shell:                 bash
         run:                   |
@@ -127,7 +180,7 @@ jobs:
 
   test-wasmtime:
     name:                      Test wasmtime
-    runs-on:                   self-hosted
+    runs-on:                   ubuntu-latest
     container:                 generalbeck/rust-builder:musl
     env:
       RUSTFLAGS:               "-Cdebug-assertions=y"
@@ -138,6 +191,19 @@ jobs:
         uses:                  actions/checkout@master
         with:
           submodules:      recursive
+      - name:                   Fixup the owner of ~/.cargo/
+        if:                     matrix.platform == 'ubuntu-latest'
+        run:                    sudo chown -R $(whoami):$(id -ng) ~/.cargo/
+       - name:                   Cache cargo registry
+        uses:                   actions/cache@v1.1.2
+        with:
+          path:                 ~/.cargo/registry
+          key:                  ${{ runner.os }}-cargo-registry-substrate-${{ hashFiles('**/Cargo.lock') }}
+      - name:                   Cache cargo index
+        uses:                   actions/cache@v1.1.2
+        with:
+          path:                 ~/.cargo/git
+          key:                  ${{ runner.os }}-cargo-git-substrate-${{ hashFiles('**/Cargo.lock') }}
       - name:                  Restore ./target
         uses:                  actions/cache@v1.1.2
         with:
@@ -146,7 +212,7 @@ jobs:
       - name:                  Run cargo Test wasmtime
         shell:                 bash
         continue-on-error:     true
-        run:                   cargo test --target x86_64-unknown-linux-musl --manifest-path "./client/executor/Cargo.toml" --release --verbose --features wasmtime
+        run:                   cargo test --manifest-path "./client/executor/Cargo.toml" --release --verbose --features wasmtime
       - name:                  Prepare build directory for cache
         shell:                 bash
         run:                   |
@@ -157,7 +223,7 @@ jobs:
 
   test-stable-int:
     name:                      Test linux stable int
-    runs-on:                   self-hosted
+    runs-on:                   ubuntu-latest
     container:                 generalbeck/rust-builder:musl
     env:
       RUSTFLAGS:               "-Cdebug-assertions=y"
@@ -168,6 +234,19 @@ jobs:
         uses:                  actions/checkout@master
         with:
           submodules:      recursive
+      - name:                   Fixup the owner of ~/.cargo/
+        if:                     matrix.platform == 'ubuntu-latest'
+        run:                    sudo chown -R $(whoami):$(id -ng) ~/.cargo/
+       - name:                   Cache cargo registry
+        uses:                   actions/cache@v1.1.2
+        with:
+          path:                 ~/.cargo/registry
+          key:                  ${{ runner.os }}-cargo-registry-substrate-${{ hashFiles('**/Cargo.lock') }}
+      - name:                   Cache cargo index
+        uses:                   actions/cache@v1.1.2
+        with:
+          path:                 ~/.cargo/git
+          key:                  ${{ runner.os }}-cargo-git-substrate-${{ hashFiles('**/Cargo.lock') }}
       - name:                  Restore ./target
         uses:                  actions/cache@v1.1.2
         with:
@@ -176,7 +255,7 @@ jobs:
       - name:                  Run cargo Test linux stable int
         shell:                 bash
         continue-on-error:     true
-        run:                   cargo test -p node-cli --target x86_64-unknown-linux-musl --release --verbose --locked -- --ignored
+        run:                   cargo test -p node-cli --release --verbose --locked -- --ignored
         env:
           RUST_LOG:            "sync=trace,consensus=trace,client=trace,state-db=trace,db=trace,forks=trace,state_db=trace,storage_cache=trace"
       - name:                  Prepare build directory for cache
@@ -189,7 +268,7 @@ jobs:
 
   test-full-crypto-feature:
     name:                      Test full crypto feature
-    runs-on:                   self-hosted
+    runs-on:                   ubuntu-latest
     container:                 generalbeck/rust-builder:musl
     env:
       RUSTFLAGS:               "-Cdebug-assertions=y"
@@ -200,6 +279,19 @@ jobs:
         uses:                  actions/checkout@master
         with:
           submodules:      recursive
+      - name:                   Fixup the owner of ~/.cargo/
+        if:                     matrix.platform == 'ubuntu-latest'
+        run:                    sudo chown -R $(whoami):$(id -ng) ~/.cargo/
+       - name:                   Cache cargo registry
+        uses:                   actions/cache@v1.1.2
+        with:
+          path:                 ~/.cargo/registry
+          key:                  ${{ runner.os }}-cargo-registry-substrate-${{ hashFiles('**/Cargo.lock') }}
+      - name:                   Cache cargo index
+        uses:                   actions/cache@v1.1.2
+        with:
+          path:                 ~/.cargo/git
+          key:                  ${{ runner.os }}-cargo-git-substrate-${{ hashFiles('**/Cargo.lock') }}
       - name:                  Restore ./target
         uses:                  actions/cache@v1.1.2
         with:
@@ -208,7 +300,7 @@ jobs:
       - name:                  Run cargo build crypto core
         shell:                 bash
         continue-on-error:     true
-        run:                   cargo +nightly build --target x86_64-unknown-linux-musl --manifest-path "./primitives/core/Cargo.toml" --verbose --no-default-features --features full_crypto
+        run:                   cargo +nightly build --manifest-path "./primitives/core/Cargo.toml" --verbose --no-default-features --features full_crypto
       - name:                  Run cargo build crypto apps
         shell:                 bash
         continue-on-error:     true
@@ -223,7 +315,7 @@ jobs:
 
   linux-dependency-rules:
     name:                      Test dependency rules
-    runs-on:                   self-hosted
+    runs-on:                   ubuntu-latest
     container:                 generalbeck/rust-builder:musl
     steps:
       - name:                  Checkout sources

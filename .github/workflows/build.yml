@@ -8,11 +8,24 @@ jobs:
 #build
   build-substrate:
     name:                      Build linux Substrate
-    runs-on:                   self-hosted
+    runs-on:                   ubuntu-latest
     container:                 generalbeck/rust-builder:musl
     steps:
       - name:                  Checkout sources
         uses:                  actions/checkout@master
+      - name:                   Fixup the owner of ~/.cargo/
+        if:                     matrix.platform == 'ubuntu-latest'
+        run:                    sudo chown -R $(whoami):$(id -ng) ~/.cargo/
+       - name:                   Cache cargo registry
+        uses:                   actions/cache@v1.1.2
+        with:
+          path:                 ~/.cargo/registry
+          key:                  ${{ runner.os }}-cargo-registry-build-${{ hashFiles('**/Cargo.lock') }}
+      - name:                   Cache cargo index
+        uses:                   actions/cache@v1.1.2
+        with:
+          path:                 ~/.cargo/git
+          key:                  ${{ runner.os }}-cargo-git-build-${{ hashFiles('**/Cargo.lock') }}
       - name:                  Restore ./target
         uses:                  actions/cache@v1.1.2
         with:
@@ -20,7 +33,7 @@ jobs:
           key:                 ${{ runner.OS }}-cargo-build-[build-substrate]-${{ hashFiles('**/Cargo.lock') }}
       - name:                  Run cargo build Substrate
         shell:                 bash
-        run:                   cargo build --target x86_64-unknown-linux-musl --release --verbose
+        run:                   cargo build --release --verbose
       - name: Prepare artifacts
         shell: bash
         run: |
@@ -37,11 +50,24 @@ jobs:
 
   build-subkey-linux:
     name:                      Build linux Subkey
-    runs-on:                   self-hosted
+    runs-on:                   ubuntu-latest
     container:                 generalbeck/rust-builder:musl
     steps:
       - name:                  Checkout sources
         uses:                  actions/checkout@master
+      - name:                   Fixup the owner of ~/.cargo/
+        if:                     matrix.platform == 'ubuntu-latest'
+        run:                    sudo chown -R $(whoami):$(id -ng) ~/.cargo/
+       - name:                   Cache cargo registry
+        uses:                   actions/cache@v1.1.2
+        with:
+          path:                 ~/.cargo/registry
+          key:                  ${{ runner.os }}-cargo-registry-build-${{ hashFiles('**/Cargo.lock') }}
+      - name:                   Cache cargo index
+        uses:                   actions/cache@v1.1.2
+        with:
+          path:                 ~/.cargo/git
+          key:                  ${{ runner.os }}-cargo-git-build-${{ hashFiles('**/Cargo.lock') }}
       - name:                  Restore ./target
         uses:                  actions/cache@v1.1.2
         with:
@@ -49,7 +75,7 @@ jobs:
           key:                 ${{ runner.OS }}-cargo-build-[build-subkey-linux]-${{ hashFiles('**/Cargo.lock') }}
       - name:                  Run cargo build Subkey
         shell:                 bash
-        run:                   cargo build --target x86_64-unknown-linux-musl --release --verbose
+        run:                   cargo build --release --verbose
       - name: Prepare artifacts
         shell: bash
         run: |
@@ -88,7 +114,7 @@ jobs:
           echo "_____ Post-processing binaries _____"
           rm -rf artifacts/*
           mkdir -p artifacts/
-          target/release/subkey artifacts/subkey
+          cp -v target/release/subkey artifacts/subkey
       - name:                  Upload artifact
         uses:                  actions/upload-artifact@v1
         continue-on-error:     true
@@ -98,7 +124,7 @@ jobs:
 
   build-rust-doc-release:
     name:                      Build Rust doc release
-    runs-on:                   self-hosted
+    runs-on:                   ubuntu-latest
     container:                 generalbeck/rust-builder:musl
     steps:
       - name:                  Checkout sources
