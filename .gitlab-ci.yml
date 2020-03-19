@@ -37,6 +37,7 @@ variables:
   CI_SERVER_NAME:                  "GitLab CI"
   DOCKER_OS:                       "debian:stretch"
   ARCH:                            "x86_64"
+
   # FIXME set to release
   CARGO_UNLEASH_INSTALL_PARAMS:    "--version 1.0.0-alpha.8"
   CARGO_UNLEASH_PKG_DEF:           "--skip node node-* pallet-template pallet-example pallet-example-* subkey chain-spec-builder"
@@ -306,7 +307,7 @@ build-linux-substrate:             &build-binary
     variables:
       - $DEPLOY_TAG
   script:
-    - WASM_BUILD_NO_COLOR=1 time cargo build --target x86_64-unknown-linux-musl --release --verbose
+    - WASM_BUILD_NO_COLOR=1 RUSTFLAGS="-Clink-arg=-nostartfiles" cargo build --target x86_64-unknown-linux-musl --release --verbose
     - mv ./target/release/substrate ./artifacts/substrate/.
     - echo -n "Substrate version = "
     - if [ "${CI_COMMIT_TAG}" ]; then
@@ -328,7 +329,7 @@ build-linux-subkey:
     - mkdir -p ./artifacts/subkey
   script:
     - cd ./bin/utils/subkey
-    - BUILD_DUMMY_WASM_BINARY=1 time cargo build --target x86_64-unknown-linux-musl --release --verbose
+    - BUILD_DUMMY_WASM_BINARY=1 RUSTFLAGS="-Clink-arg=-nostartfiles" cargo build --target x86_64-unknown-linux-musl --release --verbose
     - cd -
     - mv ./target/release/subkey ./artifacts/subkey/.
     - echo -n "Subkey version = "
