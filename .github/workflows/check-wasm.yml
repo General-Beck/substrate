@@ -13,26 +13,8 @@ jobs:
         uses:              actions/checkout@master
         with:
           submodules:      recursive
-<<<<<<< HEAD
       - name:              Cache cargo registry
         uses:              actions/cache@v1.1.2
-=======
-      - name:                   Fixup the owner of ~/.cargo/
-        if:                     matrix.platform == 'ubuntu-latest'
-        run:                    sudo chown -R $(whoami):$(id -ng) ~/.cargo/
-       - name:                   Cache cargo registry
-        uses:                   actions/cache@v1.1.2
-        with:
-          path:                 ~/.cargo/registry
-          key:                  ${{ runner.os }}-cargo-registry-check-${{ hashFiles('**/Cargo.lock') }}
-      - name:                   Cache cargo index
-        uses:                   actions/cache@v1.1.2
-        with:
-          path:                 ~/.cargo/git
-          key:                  ${{ runner.os }}-cargo-git-check-${{ hashFiles('**/Cargo.lock') }}
-      - name:                  Restore ./target
-        uses:                  actions/cache@v1.1.2
->>>>>>> ubuntu-latest + cache registry - musl
         with:
           path:            ${CARGO_HOME}/registry
           key:             ${{ runner.os }}-cargo-registry-check-${{ hashFiles('**/Cargo.lock') }}

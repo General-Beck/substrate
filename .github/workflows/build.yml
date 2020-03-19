@@ -7,7 +7,6 @@ on:                        [push]
 jobs:
 #build
   build-substrate:
-<<<<<<< HEAD
     name:                  Build linux Substrate
     runs-on:               ubuntu-latest
     container:             generalbeck/rust-builder:musl
@@ -36,38 +35,6 @@ jobs:
       - name:              Prepare artifacts
         shell:             bash
         run:               |
-=======
-    name:                      Build linux Substrate
-    runs-on:                   ubuntu-latest
-    container:                 generalbeck/rust-builder:musl
-    steps:
-      - name:                  Checkout sources
-        uses:                  actions/checkout@master
-      - name:                   Fixup the owner of ~/.cargo/
-        if:                     matrix.platform == 'ubuntu-latest'
-        run:                    sudo chown -R $(whoami):$(id -ng) ~/.cargo/
-       - name:                   Cache cargo registry
-        uses:                   actions/cache@v1.1.2
-        with:
-          path:                 ~/.cargo/registry
-          key:                  ${{ runner.os }}-cargo-registry-build-${{ hashFiles('**/Cargo.lock') }}
-      - name:                   Cache cargo index
-        uses:                   actions/cache@v1.1.2
-        with:
-          path:                 ~/.cargo/git
-          key:                  ${{ runner.os }}-cargo-git-build-${{ hashFiles('**/Cargo.lock') }}
-      - name:                  Restore ./target
-        uses:                  actions/cache@v1.1.2
-        with:
-          path:                target
-          key:                 ${{ runner.OS }}-cargo-build-[build-substrate]-${{ hashFiles('**/Cargo.lock') }}
-      - name:                  Run cargo build Substrate
-        shell:                 bash
-        run:                   cargo build --release --verbose
-      - name: Prepare artifacts
-        shell: bash
-        run: |
->>>>>>> ubuntu-latest + cache registry - musl
           echo "_____ Post-processing binaries _____"
           rm -rf artifacts/*
           mkdir -p artifacts/
@@ -80,7 +47,6 @@ jobs:
           path:            artifacts/
 
   build-subkey-linux:
-<<<<<<< HEAD
     name:                  Build linux Subkey
     runs-on:               ubuntu-latest
     container:             generalbeck/rust-builder:musl
@@ -108,38 +74,6 @@ jobs:
       - name:              Prepare artifacts
         shell:             bash
         run:               |
-=======
-    name:                      Build linux Subkey
-    runs-on:                   ubuntu-latest
-    container:                 generalbeck/rust-builder:musl
-    steps:
-      - name:                  Checkout sources
-        uses:                  actions/checkout@master
-      - name:                   Fixup the owner of ~/.cargo/
-        if:                     matrix.platform == 'ubuntu-latest'
-        run:                    sudo chown -R $(whoami):$(id -ng) ~/.cargo/
-       - name:                   Cache cargo registry
-        uses:                   actions/cache@v1.1.2
-        with:
-          path:                 ~/.cargo/registry
-          key:                  ${{ runner.os }}-cargo-registry-build-${{ hashFiles('**/Cargo.lock') }}
-      - name:                   Cache cargo index
-        uses:                   actions/cache@v1.1.2
-        with:
-          path:                 ~/.cargo/git
-          key:                  ${{ runner.os }}-cargo-git-build-${{ hashFiles('**/Cargo.lock') }}
-      - name:                  Restore ./target
-        uses:                  actions/cache@v1.1.2
-        with:
-          path:                target
-          key:                 ${{ runner.OS }}-cargo-build-[build-subkey-linux]-${{ hashFiles('**/Cargo.lock') }}
-      - name:                  Run cargo build Subkey
-        shell:                 bash
-        run:                   cargo build --release --verbose
-      - name: Prepare artifacts
-        shell: bash
-        run: |
->>>>>>> ubuntu-latest + cache registry - musl
           echo "_____ Post-processing binaries _____"
           rm -rf artifacts/*
           mkdir -p artifacts/
@@ -186,29 +120,17 @@ jobs:
           rm -rf artifacts/*
           mkdir -p artifacts/
           cp -v target/release/subkey artifacts/subkey
-<<<<<<< HEAD
       - name:              Upload artifact
         uses:              actions/upload-artifact@v1
         continue-on-error: true
-=======
-      - name:                  Upload artifact
-        uses:                  actions/upload-artifact@v1
-        continue-on-error:     true
->>>>>>> ubuntu-latest + cache registry - musl
         with:
           name:            ${{ runner.os }}.subkey.zip
           path:            artifacts/
 
   build-rust-doc-release:
-<<<<<<< HEAD
     name:                  Build Rust doc release
     runs-on:               ubuntu-latest
     container:             generalbeck/rust-builder:musl
-=======
-    name:                      Build Rust doc release
-    runs-on:                   ubuntu-latest
-    container:                 generalbeck/rust-builder:musl
->>>>>>> ubuntu-latest + cache registry - musl
     steps:
       - name:              Checkout sources
         uses:              actions/checkout@master
