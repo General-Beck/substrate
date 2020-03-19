@@ -141,7 +141,7 @@ cargo-check-benches:
   stage:                           test
   <<:                              *docker-env
   script:
-    - BUILD_DUMMY_WASM_BINARY=1 time cargo +nightly check --benches --all
+    - BUILD_DUMMY_WASM_BINARY=1 time cargo +nightly check --target x86_64-unknown-linux-musl --benches --all
     - sccache -s
 
 
@@ -167,7 +167,7 @@ test-linux-stable:                 &test-linux
     variables:
       - $DEPLOY_TAG
   script:
-    - WASM_BUILD_NO_COLOR=1 time cargo test --all --release --verbose --locked |
+    - WASM_BUILD_NO_COLOR=1 time cargo test --target x86_64-unknown-linux-musl --all --release --verbose --locked |
         tee output.log
     - sccache -s
   after_script:
@@ -211,7 +211,7 @@ test-frame-staking:
       - $DEPLOY_TAG
   script:
     - cd frame/staking/
-    - WASM_BUILD_NO_COLOR=1 time cargo test --release --verbose --no-default-features --features std
+    - WASM_BUILD_NO_COLOR=1 time cargo test --target x86_64-unknown-linux-musl --release --verbose --no-default-features --features std
     - sccache -s
 
 test-wasmtime:
@@ -227,7 +227,7 @@ test-wasmtime:
       - $DEPLOY_TAG
   script:
     - cd client/executor
-    - WASM_BUILD_NO_COLOR=1 time cargo test --release --verbose --features wasmtime
+    - WASM_BUILD_NO_COLOR=1 time cargo test --target x86_64-unknown-linux-musl --release --verbose --features wasmtime
     - sccache -s
 
 test-linux-stable-int:
@@ -241,7 +241,7 @@ test-linux-stable-int:
     - echo "___Logs will be partly shown at the end in case of failure.___"
     - echo "___Full log will be saved to the job artifacts only in case of failure.___"
     - WASM_BUILD_NO_COLOR=1 RUST_LOG=sync=trace,consensus=trace,client=trace,state-db=trace,db=trace,forks=trace,state_db=trace,storage_cache=trace
-        time cargo test -p node-cli --release --verbose --locked -- --ignored
+        time cargo test -p node-cli --target x86_64-unknown-linux-musl --release --verbose --locked -- --ignored
         &> ${CI_COMMIT_SHORT_SHA}_int_failure.log
     - sccache -s
   after_script:
@@ -287,16 +287,16 @@ test-full-crypto-feature:
       - $DEPLOY_TAG
   script:
     - cd primitives/core/
-    - time cargo +nightly build --verbose --no-default-features --features full_crypto
+    - time cargo +nightly build --target x86_64-unknown-linux-musl --verbose --no-default-features --features full_crypto
     - cd ../application-crypto
-    - time cargo +nightly build --verbose --no-default-features --features full_crypto
+    - time cargo +nightly build --target x86_64-unknown-linux-musl --verbose --no-default-features --features full_crypto
     - sccache -s
 
 
 #### stage:                        build
 
 build-linux-substrate:             &build-binary
-  stage:                           build
+  stage:                           test
   <<:                              *collect-artifacts
   <<:                              *docker-env
   <<:                              *build-only
@@ -306,7 +306,7 @@ build-linux-substrate:             &build-binary
     variables:
       - $DEPLOY_TAG
   script:
-    - WASM_BUILD_NO_COLOR=1 time cargo build --release --verbose
+    - WASM_BUILD_NO_COLOR=1 time cargo build --target x86_64-unknown-linux-musl --release --verbose
     - mv ./target/release/substrate ./artifacts/substrate/.
     - echo -n "Substrate version = "
     - if [ "${CI_COMMIT_TAG}" ]; then
@@ -328,7 +328,7 @@ build-linux-subkey:
     - mkdir -p ./artifacts/subkey
   script:
     - cd ./bin/utils/subkey
-    - BUILD_DUMMY_WASM_BINARY=1 time cargo build --release --verbose
+    - BUILD_DUMMY_WASM_BINARY=1 time cargo build --target x86_64-unknown-linux-musl --release --verbose
     - cd -
     - mv ./target/release/subkey ./artifacts/subkey/.
     - echo -n "Subkey version = "
@@ -352,7 +352,7 @@ build-rust-doc-release:
   <<:                              *build-only
   script:
     - rm -f ./crate-docs/index.html # use it as an indicator if the job succeeds
-    - BUILD_DUMMY_WASM_BINARY=1 RUSTDOCFLAGS="--html-in-header $(pwd)/.maintain/rustdoc-header.html" time cargo +nightly doc --release --all --verbose
+    - BUILD_DUMMY_WASM_BINARY=1 RUSTDOCFLAGS="--html-in-header $(pwd)/.maintain/rustdoc-header.html" time cargo +nightly doc --target x86_64-unknown-linux-musl --release --all --verbose
     - cp -R ./target/doc ./crate-docs
     - echo "<meta http-equiv=refresh content=0;url=sc_service/index.html>" > ./crate-docs/index.html
     - sccache -s
