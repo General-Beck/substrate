@@ -282,7 +282,7 @@ jobs:
       - name:                  Fixup the owner of ~/.cargo/
         if:                    matrix.platform == 'ubuntu-latest'
         run:                   sudo chown -R $(whoami):$(id -ng) ~/.cargo/
-       - name:                 Cache cargo registry
+      - name:                 Cache cargo registry
         uses:                  actions/cache@v1.1.2
         with:
           path:                ~/.cargo/registry
