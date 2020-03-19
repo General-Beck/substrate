@@ -13,18 +13,18 @@ jobs:
     steps:
       - name:              Checkout sources
         uses:              actions/checkout@master
-      - name:              Fixup the owner of ~/.cargo/
+      - name:              Fixup the owner of ${CARGO_HOME}/
         if:                matrix.platform == 'ubuntu-latest'
-        run:               sudo chown -R $(whoami):$(id -ng) ~/.cargo/
+        run:               sudo chown -R $(whoami):$(id -ng) ${CARGO_HOME}/
       - name:              Cache cargo registry
         uses:              actions/cache@v1.1.2
         with:
-          path:            ~/.cargo/registry
+          path:            ${CARGO_HOME}/registry
           key:             ${{ runner.os }}-cargo-registry-build-${{ hashFiles('**/Cargo.lock') }}
       - name:              Cache cargo index
         uses:              actions/cache@v1.1.2
         with:
-          path:            ~/.cargo/git
+          path:            ${CARGO_HOME}/git
           key:             ${{ runner.os }}-cargo-git-build-${{ hashFiles('**/Cargo.lock') }}
       - name:              Restore ./target
         uses:              actions/cache@v1.1.2
@@ -55,18 +55,18 @@ jobs:
     steps:
       - name:              Checkout sources
         uses:              actions/checkout@master
-      - name:              Fixup the owner of ~/.cargo/
+      - name:              Fixup the owner of ${CARGO_HOME}/
         if:                matrix.platform == 'ubuntu-latest'
-        run:               sudo chown -R $(whoami):$(id -ng) ~/.cargo/
+        run:               sudo chown -R $(whoami):$(id -ng) ${CARGO_HOME}/
       - name:              Cache cargo registry
         uses:              actions/cache@v1.1.2
         with:
-          path:            ~/.cargo/registry
+          path:            ${CARGO_HOME}/registry
           key:             ${{ runner.os }}-cargo-registry-build-${{ hashFiles('**/Cargo.lock') }}
       - name:              Cache cargo index
         uses:              actions/cache@v1.1.2
         with:
-          path:            ~/.cargo/git
+          path:            ${CARGO_HOME}/git
           key:             ${{ runner.os }}-cargo-git-build-${{ hashFiles('**/Cargo.lock') }}
       - name:              Restore ./target
         uses:              actions/cache@v1.1.2
@@ -99,12 +99,12 @@ jobs:
       - name:              Cache cargo registry
         uses:              actions/cache@v1.1.2
         with:
-          path:            ~/.cargo/registry
+          path:            ${CARGO_HOME}/registry
           key:             ${{ runner.os }}-cargo-registry-build-${{ hashFiles('**/Cargo.lock') }}
       - name:              Cache cargo index
         uses:              actions/cache@v1.1.2
         with:
-          path:            ~/.cargo/git
+          path:            ${CARGO_HOME}/git
           key:             ${{ runner.os }}-cargo-git-build-${{ hashFiles('**/Cargo.lock') }}
       - name:              Restore ./target
         uses:              actions/cache@v1.1.2
