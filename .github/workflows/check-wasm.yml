@@ -16,12 +16,12 @@ jobs:
       - name:              Cache cargo registry
         uses:              actions/cache@v1.1.2
         with:
-          path:            ${CARGO_HOME}/registry
+          path:            /usr/local/cargo/registry
           key:             ${{ runner.os }}-cargo-registry-check-${{ hashFiles('**/Cargo.lock') }}
       - name:              Cache cargo index
         uses:              actions/cache@v1.1.2
         with:
-          path:            ${CARGO_HOME}/git
+          path:            /usr/local/cargo/git
           key:             ${{ runner.os }}-cargo-git-check-${{ hashFiles('**/Cargo.lock') }}
       - name:              Restore ./target
         uses:              actions/cache@v1.1.2

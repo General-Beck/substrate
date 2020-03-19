@@ -16,12 +16,12 @@ jobs:
       - name:              Cache cargo registry
         uses:              actions/cache@v1.1.2
         with:
-          path:            ${CARGO_HOME}/registry
+          path:            /usr/local/cargo/registry
           key:             ${{ runner.os }}-cargo-registry-build-${{ hashFiles('**/Cargo.lock') }}
       - name:              Cache cargo index
         uses:              actions/cache@v1.1.2
         with:
-          path:            ${CARGO_HOME}/git
+          path:            /usr/local/cargo/git
           key:             ${{ runner.os }}-cargo-git-build-${{ hashFiles('**/Cargo.lock') }}
       - name:              Restore ./target
         uses:              actions/cache@v1.1.2
@@ -56,12 +56,12 @@ jobs:
       - name:              Cache cargo registry
         uses:              actions/cache@v1.1.2
         with:
-          path:            ${CARGO_HOME}/registry
+          path:            /usr/local/cargo/registry
           key:             ${{ runner.os }}-cargo-registry-build-${{ hashFiles('**/Cargo.lock') }}
       - name:              Cache cargo index
         uses:              actions/cache@v1.1.2
         with:
-          path:            ${CARGO_HOME}/git
+          path:            /usr/local/cargo/git
           key:             ${{ runner.os }}-cargo-git-build-${{ hashFiles('**/Cargo.lock') }}
       - name:              Restore ./target
         uses:              actions/cache@v1.1.2
@@ -91,16 +91,16 @@ jobs:
     steps:
       - name:              Checkout sources
         uses:              actions/checkout@master
-      - name:              Cache cargo registry
-        uses:              actions/cache@v1.1.2
+      - name: Cache cargo registry
+        uses: actions/cache@v1.1.2
         with:
-          path:            ${CARGO_HOME}/registry
-          key:             ${{ runner.os }}-cargo-registry-build-${{ hashFiles('**/Cargo.lock') }}
-      - name:              Cache cargo index
-        uses:              actions/cache@v1.1.2
+          path: ~/.cargo/registry
+          key: ${{ runner.os }}-cargo-registry-${{ hashFiles('**/Cargo.lock') }}
+      - name: Cache cargo index
+        uses: actions/cache@v1
         with:
-          path:            ${CARGO_HOME}/git
-          key:             ${{ runner.os }}-cargo-git-build-${{ hashFiles('**/Cargo.lock') }}
+          path: ~/.cargo/git
+          key: ${{ runner.os }}-cargo-index-${{ hashFiles('**/Cargo.lock') }}
       - name:              Restore ./target
         uses:              actions/cache@v1.1.2
         with:
