@@ -13,9 +13,6 @@ jobs:
     steps:
       - name:              Checkout sources
         uses:              actions/checkout@master
-      - name:              Fixup the owner of ${CARGO_HOME}/
-        if:                matrix.platform == 'ubuntu-latest'
-        run:               sudo chown -R $(whoami):$(id -ng) ${CARGO_HOME}/
       - name:              Cache cargo registry
         uses:              actions/cache@v1.1.2
         with:
@@ -32,6 +29,7 @@ jobs:
           path:            target
           key:             ${{ runner.OS }}-cargo-build-[build-substrate]-${{ hashFiles('**/Cargo.lock') }}
       - name:              Run cargo build Substrate
+        continue-on-error: true
         shell:             bash
         run:               cargo build --release --verbose
       - name:              Prepare artifacts
@@ -55,9 +53,6 @@ jobs:
     steps:
       - name:              Checkout sources
         uses:              actions/checkout@master
-      - name:              Fixup the owner of ${CARGO_HOME}/
-        if:                matrix.platform == 'ubuntu-latest'
-        run:               sudo chown -R $(whoami):$(id -ng) ${CARGO_HOME}/
       - name:              Cache cargo registry
         uses:              actions/cache@v1.1.2
         with:
@@ -147,5 +142,6 @@ jobs:
           path:            target
           key:             ${{ runner.OS }}-cargo-build-[build-rust-doc-release]-${{ hashFiles('**/Cargo.lock') }}
       - name:              Run cargo doc release
+        continue-on-error: true
         shell:             bash
         run:               cargo +nightly doc --release --all --verbose

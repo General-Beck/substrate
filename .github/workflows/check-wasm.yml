@@ -13,9 +13,6 @@ jobs:
         uses:              actions/checkout@master
         with:
           submodules:      recursive
-      - name:              Fixup the owner of ${CARGO_HOME}/
-        if:                matrix.platform == 'ubuntu-latest'
-        run:               sudo chown -R $(whoami):$(id -ng) ${CARGO_HOME}/
       - name:              Cache cargo registry
         uses:              actions/cache@v1.1.2
         with:
