@@ -13,6 +13,9 @@ jobs:
     steps:
       - name:              Checkout sources
         uses:              actions/checkout@master
+      - name:              Prepare registry & index dir's
+        shell:             bash
+        run:               mkdir -p /usr/local/cargo/registry&&mkdir -p /usr/local/cargo/git
       - name:              Cache cargo registry
         uses:              actions/cache@v1.1.2
         with:
@@ -53,6 +56,9 @@ jobs:
     steps:
       - name:              Checkout sources
         uses:              actions/checkout@master
+      - name:              Prepare registry & index dir's
+        shell:             bash
+        run:               mkdir -p /usr/local/cargo/registry&&mkdir -p /usr/local/cargo/git
       - name:              Cache cargo registry
         uses:              actions/cache@v1.1.2
         with:
@@ -91,16 +97,16 @@ jobs:
     steps:
       - name:              Checkout sources
         uses:              actions/checkout@master
-      - name: Cache cargo registry
-        uses: actions/cache@v1.1.2
+      - name:              Cache cargo registry
+        uses:              actions/cache@v1.1.2
         with:
-          path: ~/.cargo/registry
-          key: ${{ runner.os }}-cargo-registry-${{ hashFiles('**/Cargo.lock') }}
-      - name: Cache cargo index
-        uses: actions/cache@v1
+          path:            ~/.cargo/registry
+          key:             ${{ runner.os }}-cargo-registry-${{ hashFiles('**/Cargo.lock') }}
+      - name:              Cache cargo index
+        uses:              actions/cache@v1
         with:
-          path: ~/.cargo/git
-          key: ${{ runner.os }}-cargo-index-${{ hashFiles('**/Cargo.lock') }}
+          path:            ~/.cargo/git
+          key:             ${{ runner.os }}-cargo-index-${{ hashFiles('**/Cargo.lock') }}
       - name:              Restore ./target
         uses:              actions/cache@v1.1.2
         with:

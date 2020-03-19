@@ -17,6 +17,9 @@ jobs:
         uses:                  actions/checkout@master
         with:
           submodules:          recursive
+      - name:                  Prepare registry & index dir's
+        shell:                 bash
+        run:                   mkdir -p /usr/local/cargo/registry&&mkdir -p /usr/local/cargo/git
       - name:                  Cache cargo registry
         uses:                  actions/cache@v1.1.2
         with:
@@ -56,6 +59,9 @@ jobs:
         uses:                  actions/checkout@master
         with:
           submodules:          recursive
+      - name:                  Prepare registry & index dir's
+        shell:                 bash
+        run:                   mkdir -p /usr/local/cargo/registry&&mkdir -p /usr/local/cargo/git
       - name:                  Cache cargo registry
         uses:                  actions/cache@v1.1.2
         with:
@@ -97,6 +103,9 @@ jobs:
         uses:                  actions/checkout@master
         with:
           submodules:          recursive
+      - name:                  Prepare registry & index dir's
+        shell:                 bash
+        run:                   mkdir -p /usr/local/cargo/registry&&mkdir -p /usr/local/cargo/git
       - name:                  Cache cargo registry
         uses:                  actions/cache@v1.1.2
         with:
@@ -138,6 +147,9 @@ jobs:
         uses:                  actions/checkout@master
         with:
           submodules:          recursive
+      - name:                  Prepare registry & index dir's
+        shell:                 bash
+        run:                   mkdir -p /usr/local/cargo/registry&&mkdir -p /usr/local/cargo/git
       - name:                  Cache cargo registry
         uses:                  actions/cache@v1.1.2
         with:
@@ -178,6 +190,9 @@ jobs:
         uses:                  actions/checkout@master
         with:
           submodules:          recursive
+      - name:                  Prepare registry & index dir's
+        shell:                 bash
+        run:                   mkdir -p /usr/local/cargo/registry&&mkdir -p /usr/local/cargo/git
       - name:                  Cache cargo registry
         uses:                  actions/cache@v1.1.2
         with:
@@ -218,6 +233,9 @@ jobs:
         uses:                  actions/checkout@master
         with:
           submodules:          recursive
+      - name:                  Prepare registry & index dir's
+        shell:                 bash
+        run:                   mkdir -p /usr/local/cargo/registry&&mkdir -p /usr/local/cargo/git
       - name:                  Cache cargo registry
         uses:                  actions/cache@v1.1.2
         with:
@@ -260,6 +278,9 @@ jobs:
         uses:                  actions/checkout@master
         with:
           submodules:          recursive
+      - name:                  Prepare registry & index dir's
+        shell:                 bash
+        run:                   mkdir -p /usr/local/cargo/registry&&mkdir -p /usr/local/cargo/git
       - name:                  Cache cargo registry
         uses:                  actions/cache@v1.1.2
         with:
@@ -300,6 +321,9 @@ jobs:
         uses:                  actions/checkout@master
         with:
           submodules:          recursive
+      - name:                  Prepare registry & index dir's
+        shell:                 bash
+        run:                   mkdir -p /usr/local/cargo/registry&&mkdir -p /usr/local/cargo/git
       - name:                  Test dependency rules
         shell:                 bash
         run:                   .maintain/ensure-deps.sh
