@@ -203,7 +203,7 @@ jobs:
         with:
           path:                /usr/local/cargo/git
           key:                 ${{ runner.os }}-cargo-git-substrate-${{ hashFiles('**/Cargo.lock') }}
-      - name:                  Restore ./target<<<<<<< HEAD
+      - name:                  Restore ./target
         uses:                  actions/cache@v1.1.2
         with:
           path:                target
