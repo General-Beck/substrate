@@ -25,13 +25,7 @@ jobs:
         shell:                 bash
         continue-on-error:     true
         run:                   time cargo +nightly check --benches --all
-      - name:                  Prepare build directory for cache
-        shell:                 bash
-        run:                   |
-          echo "Prepare build directory for cache"
-          find ./target/debug -maxdepth 1 -type f -delete;
-          rm -rf ./target/debug/{deps,.fingerprint}/*;
-          rm -f  ./target/.rustc_info.json;
+
 
   cargo-check-subkey:
     name:                      Cargo check subkey
@@ -53,14 +47,6 @@ jobs:
         shell:                 bash
         continue-on-error:     true
         run:                   time cargo check --release --manifest-path "bin/utils/subkey/Cargo.toml"
-      - name:                  Prepare build directory for cache
-        shell:                 bash
-        run:                   |
-          echo "Prepare build directory for cache"
-          find ./target/release -maxdepth 1 -type f -delete;
-          rm -rf ./target/release/{deps,.fingerprint}/*;
-          rm -f  ./target/.rustc_info.json;
-
 
   test-stable:
     name:                      Test linux stable
@@ -83,13 +69,6 @@ jobs:
         shell:                 bash
         continue-on-error:     true
         run:                   cargo test --all --release --verbose --locked
-      - name:                  Prepare build directory for cache
-        shell:                 bash
-        run:                   |
-          echo "Prepare build directory for cache"
-          find ./target/release -maxdepth 1 -type f -delete;
-          rm -rf ./target/release/{deps,.fingerprint}/*{substrate}*;
-          rm -f  ./target/.rustc_info.json;
 
 
   testrfame-staking:
@@ -113,13 +92,6 @@ jobs:
         shell:                 bash
         continue-on-error:     true
         run:                   cargo test --manifest-path "./frame/staking/Cargo.toml" --release --verbose --no-default-features --features std
-      - name:                  Prepare build directory for cache
-        shell:                 bash
-        run:                   |
-          echo "Prepare build directory for cache"
-          find ./target/release -maxdepth 1 -type f -delete;
-          rm -rf ./target/release/{deps,.fingerprint}/*;
-          rm -f  ./target/.rustc_info.json;
 
   test-wasmtime:
     name:                      Test wasmtime
@@ -142,13 +114,6 @@ jobs:
         shell:                 bash
         continue-on-error:     true
         run:                   cargo test --manifest-path "./client/executor/Cargo.toml" --release --verbose --features wasmtime
-      - name:                  Prepare build directory for cache
-        shell:                 bash
-        run:                   |
-          echo "Prepare build directory for cache"
-          find ./target/release -maxdepth 1 -type f -delete;
-          rm -rf ./target/release/{deps,.fingerprint}/*;
-          rm -f  ./target/.rustc_info.json;
 
   test-stable-int:
     name:                      Test linux stable int
@@ -173,13 +138,6 @@ jobs:
         run:                   cargo test -p node-cli --release --verbose --locked -- --ignored
         env:
           RUST_LOG:            "sync=trace,consensus=trace,client=trace,state-db=trace,db=trace,forks=trace,state_db=trace,storage_cache=trace"
-      - name:                  Prepare build directory for cache
-        shell:                 bash
-        run:                   |
-          echo "Prepare build directory for cache"
-          find ./target/release -maxdepth 1 -type f -delete;
-          rm -rf ./target/release/{deps,.fingerprint}/*;
-          rm -f  ./target/.rustc_info.json;
 
   test-full-crypto-feature:
     name:                      Test full crypto feature
@@ -206,23 +164,3 @@ jobs:
         shell:                 bash
         continue-on-error:     true
         run:                   cargo +nightly build --manifest-path "./primitives/application-crypto/Cargo.toml" --verbose --no-default-features --features full_crypto
-      - name:                  Prepare build directory for cache
-        shell:                 bash
-        run:                   |
-          echo "Prepare build directory for cache"
-          find ./target/debug -maxdepth 1 -type f -delete;
-          rm -rf ./target/debug/{deps,.fingerprint}/*;
-          rm -f  ./target/.rustc_info.json;
-
-  linux-dependency-rules:
-    name:                      Test dependency rules
-    runs-on:                   ubuntu-latest
-    container:                 generalbeck/rust-builder:musl
-    steps:
-      - name:                  Checkout sources
-        uses:                  actions/checkout@master
-        with:
-          submodules:          recursive
-      - name:                  Test dependency rules
-        shell:                 bash
-        run:                   .maintain/ensure-deps.sh
