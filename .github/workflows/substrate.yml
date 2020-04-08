@@ -16,19 +16,6 @@ jobs:
         uses:                  actions/checkout@master
         with:
           submodules:          recursive
-      - name:                  Prepare registry & index dir's
-        shell:                 bash
-        run:                   mkdir -p /usr/local/cargo/registry&&mkdir -p /usr/local/cargo/git
-      - name:                  Cache cargo registry
-        uses:                  actions/cache@v1.1.2
-        with:
-          path:                /usr/local/cargo/registry
-          key:                 ${{ runner.os }}-cargo-registry-substrate-${{ hashFiles('**/Cargo.lock') }}
-      - name:                  Cache cargo index
-        uses:                  actions/cache@v1.1.2
-        with:
-          path:                /usr/local/cargo/git
-          key:                 ${{ runner.os }}-cargo-git-substrate-${{ hashFiles('**/Cargo.lock') }}
       - name:                  Restore ./target
         uses:                  actions/cache@v1.1.2
         with:
@@ -57,19 +44,6 @@ jobs:
         uses:                  actions/checkout@master
         with:
           submodules:          recursive
-      - name:                  Prepare registry & index dir's
-        shell:                 bash
-        run:                   mkdir -p /usr/local/cargo/registry&&mkdir -p /usr/local/cargo/git
-      - name:                  Cache cargo registry
-        uses:                  actions/cache@v1.1.2
-        with:
-          path:                /usr/local/cargo/registry
-          key:                 ${{ runner.os }}-cargo-registry-substrate-${{ hashFiles('**/Cargo.lock') }}
-      - name:                  Cache cargo index
-        uses:                  actions/cache@v1.1.2
-        with:
-          path:                /usr/local/cargo/git
-          key:                 ${{ runner.os }}-cargo-git-substrate-${{ hashFiles('**/Cargo.lock') }}
       - name:                  Restore ./target
         uses:                  actions/cache@v1.1.2
         with:
@@ -100,19 +74,6 @@ jobs:
         uses:                  actions/checkout@master
         with:
           submodules:          recursive
-      - name:                  Prepare registry & index dir's
-        shell:                 bash
-        run:                   mkdir -p /usr/local/cargo/registry&&mkdir -p /usr/local/cargo/git
-      - name:                  Cache cargo registry
-        uses:                  actions/cache@v1.1.2
-        with:
-          path:                /usr/local/cargo/registry
-          key:                 ${{ runner.os }}-cargo-registry-substrate-${{ hashFiles('**/Cargo.lock') }}
-      - name:                  Cache cargo index
-        uses:                  actions/cache@v1.1.2
-        with:
-          path:                /usr/local/cargo/git
-          key:                 ${{ runner.os }}-cargo-git-substrate-${{ hashFiles('**/Cargo.lock') }}
       - name:                  Restore ./target
         uses:                  actions/cache@v1.1.2
         with:
@@ -143,19 +104,6 @@ jobs:
         uses:                  actions/checkout@master
         with:
           submodules:          recursive
-      - name:                  Prepare registry & index dir's
-        shell:                 bash
-        run:                   mkdir -p /usr/local/cargo/registry&&mkdir -p /usr/local/cargo/git
-      - name:                  Cache cargo registry
-        uses:                  actions/cache@v1.1.2
-        with:
-          path:                /usr/local/cargo/registry
-          key:                 ${{ runner.os }}-cargo-registry-substrate-${{ hashFiles('**/Cargo.lock') }}
-      - name:                  Cache cargo index
-        uses:                  actions/cache@v1.1.2
-        with:
-          path:                /usr/local/cargo/git
-          key:                 ${{ runner.os }}-cargo-git-substrate-${{ hashFiles('**/Cargo.lock') }}
       - name:                  Restore ./target
         uses:                  actions/cache@v1.1.2
         with:
@@ -185,19 +133,6 @@ jobs:
         uses:                  actions/checkout@master
         with:
           submodules:          recursive
-      - name:                  Prepare registry & index dir's
-        shell:                 bash
-        run:                   mkdir -p /usr/local/cargo/registry&&mkdir -p /usr/local/cargo/git
-      - name:                  Cache cargo registry
-        uses:                  actions/cache@v1.1.2
-        with:
-          path:                /usr/local/cargo/registry
-          key:                 ${{ runner.os }}-cargo-registry-substrate-${{ hashFiles('**/Cargo.lock') }}
-      - name:                  Cache cargo index
-        uses:                  actions/cache@v1.1.2
-        with:
-          path:                /usr/local/cargo/git
-          key:                 ${{ runner.os }}-cargo-git-substrate-${{ hashFiles('**/Cargo.lock') }}
       - name:                  Restore ./target
         uses:                  actions/cache@v1.1.2
         with:
@@ -227,19 +162,6 @@ jobs:
         uses:                  actions/checkout@master
         with:
           submodules:          recursive
-      - name:                  Prepare registry & index dir's
-        shell:                 bash
-        run:                   mkdir -p /usr/local/cargo/registry&&mkdir -p /usr/local/cargo/git
-      - name:                  Cache cargo registry
-        uses:                  actions/cache@v1.1.2
-        with:
-          path:                /usr/local/cargo/registry
-          key:                 ${{ runner.os }}-cargo-registry-substrate-${{ hashFiles('**/Cargo.lock') }}
-      - name:                  Cache cargo index
-        uses:                  actions/cache@v1.1.2
-        with:
-          path:                /usr/local/cargo/git
-          key:                 ${{ runner.os }}-cargo-git-substrate-${{ hashFiles('**/Cargo.lock') }}
       - name:                  Restore ./target
         uses:                  actions/cache@v1.1.2
         with:
@@ -271,19 +193,6 @@ jobs:
         uses:                  actions/checkout@master
         with:
           submodules:          recursive
-      - name:                  Prepare registry & index dir's
-        shell:                 bash
-        run:                   mkdir -p /usr/local/cargo/registry&&mkdir -p /usr/local/cargo/git
-      - name:                  Cache cargo registry
-        uses:                  actions/cache@v1.1.2
-        with:
-          path:                /usr/local/cargo/registry
-          key:                 ${{ runner.os }}-cargo-registry-substrate-${{ hashFiles('**/Cargo.lock') }}
-      - name:                  Cache cargo index
-        uses:                  actions/cache@v1.1.2
-        with:
-          path:                /usr/local/cargo/git
-          key:                 ${{ runner.os }}-cargo-git-substrate-${{ hashFiles('**/Cargo.lock') }}
       - name:                  Restore ./target
         uses:                  actions/cache@v1.1.2
         with:
@@ -314,9 +223,6 @@ jobs:
         uses:                  actions/checkout@master
         with:
           submodules:          recursive
-      - name:                  Prepare registry & index dir's
-        shell:                 bash
-        run:                   mkdir -p /usr/local/cargo/registry&&mkdir -p /usr/local/cargo/git
       - name:                  Test dependency rules
         shell:                 bash
         run:                   .maintain/ensure-deps.sh
